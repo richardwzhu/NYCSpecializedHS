@@ -22,3 +22,28 @@ admission = data[:,3].astype(np.int)
 corrArr = np.corrcoef(application, admission)
 corr = corrArr[0, 1]
 
+import matplotlib.pyplot as plt
+plt.title("Correlation between Applications and Acceptances to HSPHS")
+plt.xlabel("Applications")
+plt.ylabel("Acceptances")
+plt.plot(application, admission, 'o', color='black', markersize=2)
+plt.plot(np.unique(application), np.poly1d(np.polyfit(application, admission, 1))(np.unique(application)))
+
+
+# Correlation between application rate and admission
+schoolSize = data[:,20]
+appMod = application
+admMod = admission
+delete = []
+for ii in range(len(schoolSize)):
+    if schoolSize[ii] == "":
+        delete.append(ii)
+for ii in range(len(delete)):
+    index = len(delete) - 1 - ii
+    schoolSize = np.delete(schoolSize, delete[index])
+    appMod = np.delete(appMod, delete[index])
+    admMod = np.delete(admMod, delete[index])
+schoolSize = schoolSize.astype(np.int)
+appRate = appMod/schoolSize
+corrArr = np.corrcoef(appRate, admMod)
+corr = corrArr[0, 1]
