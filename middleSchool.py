@@ -47,3 +47,22 @@ schoolSize = schoolSize.astype(np.int)
 appRate = appMod/schoolSize
 corrArr = np.corrcoef(appRate, admMod)
 corr = corrArr[0, 1]
+
+# Calculating per student odds
+bestOdds = 0
+index = 0
+for ii in range(len(schoolSize)):
+    if schoolSize[ii] != 0:
+        if admMod[ii]/schoolSize[ii] > bestOdds:
+            bestOdds = admMod[ii]/schoolSize[ii]
+            index = ii
+dbn = data[:,0]
+for ii in range(len(delete)):
+    ind = len(delete) - 1 - ii
+    dbn = np.delete(dbn, delete[ind])
+print(dbn[index])
+
+plt.title("Per Student Odds of Admission to HSPHS")
+plt.xlabel("School Size")
+plt.ylabel("Acceptances")
+plt.plot(schoolSize, admMod, 'o', color='black', markersize=2)
