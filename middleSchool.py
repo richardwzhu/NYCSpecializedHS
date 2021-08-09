@@ -9,6 +9,7 @@ Created on Mon Aug  2 16:32:56 2021
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import linear_model 
+import scipy.stats as st
 
 # Remove commas from school names
 with open("middleSchoolData.csv") as infile, open("fixedData.csv", "w") as outfile:
@@ -142,3 +143,13 @@ for ii in range(2):
     for jj in range(3):
         axs[ii, jj].get_xaxis().set_visible(False)
         axs[ii, jj].get_yaxis().set_visible(False)
+
+# Small vs large school
+schoolSizeMod = schoolSize[appMod>0]
+admMod = admMod[appMod>0]
+appMod = appMod[appMod>0]
+admRate = admMod/appMod
+median = np.median(schoolSizeMod)
+smallSchools = admRate[schoolSizeMod < median]
+largeSchools = admRate[schoolSizeMod >= median]
+pValSL = st.ttest_ind(smallSchools, largeSchools)
