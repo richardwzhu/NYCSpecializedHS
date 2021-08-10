@@ -26,7 +26,7 @@ corrArr = np.corrcoef(application, admission)
 corr = corrArr[0, 1]
 
 plt.figure(0)
-plt.title("Correlation between Applications and Acceptances to HSPHS")
+plt.title("Correlation Between Applications and Acceptances to HSPHS")
 plt.xlabel("Applications")
 plt.ylabel("Acceptances")
 plt.plot(application, admission, 'o', color='black', markersize=2)
@@ -153,3 +153,39 @@ median = np.median(schoolSizeMod)
 smallSchools = admRate[schoolSizeMod < median]
 largeSchools = admRate[schoolSizeMod >= median]
 pValSL = st.ttest_ind(smallSchools, largeSchools)
+
+#Per student spending vs student achievemnt
+spending = data[:,4]
+achievement = data[:,21]
+reading = data[:,22]
+delete = []
+for ii in range(len(spending)):
+    if spending[ii] == "" or achievement[ii] == "" or reading[ii] == "":
+        if ii not in delete: delete.append(ii)
+for ii in range(len(delete)):
+    index = len(delete) - 1 - ii
+    spending = np.delete(spending, delete[index])
+    achievement = np.delete(achievement, delete[index])
+    reading = np.delete(reading, delete[index])
+spending = spending.astype(int)
+achievement = achievement.astype(float)
+reading = reading.astype(float)
+plt.figure(5)
+plt.title("Correlation Between Per Student Spending and Student Achievement")
+plt.xlabel("Per Student Spending")
+plt.ylabel("Student Achievement")
+plt.plot(spending, achievement, 'o', color='black', markersize=2)
+medianSpending = np.median(spending)
+lowSpending = achievement[spending < medianSpending]
+highSpending = achievement[spending >= medianSpending]
+pValLHA = st.ttest_ind(lowSpending, highSpending) 
+plt.figure(6)
+plt.title("Correlation Between Per Student Spending and Reading Scores Exceed")
+plt.xlabel("Per Student Spending")
+plt.ylabel("Reading Scores Exceed")
+plt.plot(spending, reading, 'o', color='black', markersize=2)
+medianSpending = np.median(spending)
+lowSpending = reading[spending < medianSpending]
+highSpending = reading[spending >= medianSpending]
+pValLHR = st.ttest_ind(lowSpending, highSpending) 
+    
