@@ -1,4 +1,4 @@
-# Big Data Project
+# Intro DS Capstone Project
 ## Richard Zhu
 
 For this project, I used Numpy arrays to store and work with all my data. For each question, I extracted the necessary data and stored it in separate Numpy arrays/matrices. Because I used a dtype of ‘unicode’ when retrieving the data through np.genfromtxt(), I converted the extracted data to its proper datatype using astype(datatype). To deal with missing data and mitigate any inconsistencies, I removed all empty data and their corresponding entries in relevant datasets. I also utilized the Matplotlib, SciPy, and Scikit Learn libraries to plot plots and perform correlation, linear regression, and hypothesis testing functions. To handle dimension reduction, I conducted a PCA on relevant data using sklearn.decomposition’s PCA class.
